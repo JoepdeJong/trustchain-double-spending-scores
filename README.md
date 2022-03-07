@@ -4,13 +4,19 @@ This code generates a list of addresses with a random score between 0 and 1. The
 
 ## Usage
 
-To generate 256 random addresses with random scores execute
+The first argument of the file is the `length`. Default value is `128`. To generate 256 random addresses with random scores execute
 
 ```sh
 ./addresses.py 256
 ```
 
-A file `output-addresses.txt` will be created containing the output.
+The second argument is the `seed`. Default value is `1337`.
+
+```sh
+./addresses.py 256 21000000
+```
+
+A file `output-addresses-<seed>-<length>.txt` will be created containing the output.
 
 ### Input addresses
 
