@@ -1,4 +1,6 @@
+import os
 import random
+import sys
 
 # Use a random seed to create a list of random addresses
 random.seed(1337)
@@ -23,15 +25,43 @@ def generateScore(seed = None):
     return random.random()
 
 
-def createAddressList(length = 100):
+def createAddressList(length = 100, input = "input-addresses.txt"):
     """
     Create a list of random addresses with random scores
     """
     addresses = []
-    for i in range(length):
+
+    n = 0
+    # Check if the input file exists
+    if os.path.isfile(input):
+        # Read the addresses from the input file
+        with open(input, "r") as f:
+            for line in f:
+                addresses.append((line.strip(), generateScore()))
+                n += 1
+
+    for i in range(n, length):
         addresses.append((generateAddress(), generateScore()))
     return addresses
 
 
+def writeAddressList(addresses, output = "output-addresses.txt"):
+    """
+    Write the list of addresses to a file
+    """
+    with open(output, "w") as f:
+        for address, score in addresses:
+            f.write(address + " " + str(score) + "\n")
 
-print(createAddressList(148))
+if __name__ == "__main__":
+    # Read input from the command line
+    if len(sys.argv) > 1:
+        length = int(sys.argv[1])
+    else:
+        length = 128
+
+    # Create a list of random addresses with random scores
+    addresses = createAddressList(length)
+
+    # Write the list to a file
+    writeAddressList(addresses)
