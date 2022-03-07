@@ -2,9 +2,6 @@ import os
 import random
 import sys
 
-# Use a random seed to create a list of random addresses
-random.seed(1337)
-
 def generateAddress(length = 148, seed = None):
     """
     Generate a hexadeximal address
@@ -54,14 +51,24 @@ def writeAddressList(addresses, output = "output-addresses.txt"):
             f.write(address + " " + str(score) + "\n")
 
 if __name__ == "__main__":
+    # Set default values
+    length = 128
+    seed = 1337
+
     # Read input from the command line
+    # The first argument is the number of addresses to generate, the second argument is the seed
     if len(sys.argv) > 1:
         length = int(sys.argv[1])
+        if len(sys.argv) > 2:
+            seed = int(sys.argv[2])
     else:
         length = 128
 
     # Create a list of random addresses with random scores
     addresses = createAddressList(length)
 
+
+    # Set the output file name in the format "output-addresses-<seed>-<length>.txt"
+    filename = "output-addresses-" + str(seed) + "-" + str(length) + ".txt"
     # Write the list to a file
-    writeAddressList(addresses)
+    writeAddressList(addresses, filename)
